@@ -16,7 +16,8 @@ class QuestionController extends Controller
         $city = $request->query('city');
     
         // Query Builder with optional search filters
-        $questions = Question::when($keywords, function ($query, $keywords) {
+        $questions = Question::with('user')
+                    ->when($keywords, function ($query, $keywords) {
                             return $query->where('title', 'LIKE', "%{$keywords}%")
                                          ->orWhere('content', 'LIKE', "%{$keywords}%");
                         })
@@ -26,13 +27,6 @@ class QuestionController extends Controller
        
 
         return view('questions.index', compact('questions'));
-    }
-
-    public function create()
-    {
-        // 
-        $villes = Ville::all();
-        return view("questions.create",compact("villes"));
     }
 
 
@@ -61,7 +55,7 @@ class QuestionController extends Controller
     public function show($id)
     {
         // 
-        $question = Question::findOrFail($id);
+        $question = Question::with('user')->findOrFail($id);
         return view("questions.show", compact("question"));
     }
 

@@ -1,0 +1,26 @@
+## Auth:
+     ✔ register @done(25-02-19 14:22)
+     ✔ login @done(25-02-19 14:24)
+     ✔ logout @done(25-02-19 14:22)
+     ☐ middlewares    
+## Questions : 
+     ✔ create ( title , content , ville ) @done(25-02-19 14:27)
+     ✔ list (title , content , ville , date) @done(25-02-19 14:33)
+     ✔ search by keyword or city @done(25-02-19 14:35)
+     ☐ delete
+     ☐ question detail
+     ☐ update
+     ☐ save | remove
+     ☐ like | remove like
+## Profile : 
+     ☐ update info
+     ☐ upload image
+## Sort : 
+     ☐ by city or somthing
+
+
+
+
+
+## Bugs or Improvement:
+     ☐ update carete question form
