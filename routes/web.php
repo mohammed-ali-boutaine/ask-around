@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProfileController;
 
 
 
@@ -19,8 +20,13 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middl
 
 // dashboard page
 Route::get('/dashboard',  [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
+Route::view('/profile','dashboard.profile')->name('profile');
 
-
+Route::middleware(['auth'])->group(function () {
+     Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+     Route::post('/profile/picture', [ProfileController::class, 'updatePicture'])->name('profile.update-picture');
+ });
 // questions routes
 Route::get('/questions', [QuestionController::class, 'index'])->name('questions.index');
 // Route::get('/questions/create', [QuestionController::class, 'create'])->name('questions.create');

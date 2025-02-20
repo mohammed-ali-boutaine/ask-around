@@ -73,7 +73,7 @@
                                 aria-expanded="false"
                                 aria-haspopup="true"
                             >
-                                <img class="w-8 h-8 rounded-full mr-2" src="{{Auth::user()->picture ? asset('storage/' . $user->picture) : asset('https://picsum.photos/32/32') }}"   alt="User profile" />
+                                <img class="w-8 h-8 rounded-full mr-2" src="{{Auth::user()->picture ? asset('storage/' . Auth::user()->picture) : asset('https://picsum.photos/32/32') }}"   alt="User profile" />
                                 <span class="mr-2">{{Auth::user()->username}}</span>
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
@@ -87,14 +87,18 @@
                                 aria-orientation="vertical"
                                 aria-labelledby="profile-menu-button"
                             >
-                                <a href="#profile" 
+                                <a href="/profile" 
                                    class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700" 
                                    role="menuitem"
                                 >Profile</a>
-                                <a href="#saved" 
+                                <a href="/saved" 
                                    class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700" 
                                    role="menuitem"
                                 >Saved Items</a>
+                                <a href="/statistics" 
+                                class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700" 
+                                role="menuitem"
+                             >Statistics</a>
                                 <div class="border-t border-gray-200 dark:border-gray-600"></div>
                                 <p
                                 class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-700" 
