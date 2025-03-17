@@ -17,12 +17,6 @@ Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
-
-
-
-
-
-
 // dashboard page
 Route::get('/dashboard',  [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
 Route::view('/profile', 'dashboard.profile')->name('profile');
@@ -31,6 +25,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::post('/profile/picture', [ProfileController::class, 'updatePicture'])->name('profile.update-picture');
+    Route::get('/saved', [DashboardController::class, 'savedQuestions'])->name('saved');
 });
 // questions routes
 Route::get('/questions', [QuestionController::class, 'index'])->name('questions.index');

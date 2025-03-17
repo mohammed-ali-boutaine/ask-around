@@ -36,4 +36,10 @@ class DashboardController extends Controller
 
         return view('dashboard.index', $data);
     }
+
+    public function savedQuestions()
+    {
+        $savedQuestions = auth()->user()->savedQuestions()->with('user')->get();
+        return view('dashboard.saved', compact('savedQuestions'));
+    }
 }
