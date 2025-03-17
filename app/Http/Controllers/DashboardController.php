@@ -29,8 +29,9 @@ class DashboardController extends Controller
         // get villes
         // $villes = Ville::all() ;
         $villes = [];
+        $count = $questions->count();
 
-        $data = ["questions" => $questions, "villes" => $villes];;
+        $data = ["questions" => $questions, "villes" => $villes, "count" => $count];
 
 
         return view('dashboard.index', $data);

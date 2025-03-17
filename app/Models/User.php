@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+
 class User extends Authenticatable
 {
     //
@@ -15,9 +16,14 @@ class User extends Authenticatable
     protected $fillable = ['username', 'email', 'password', 'picture'];
     protected $hidden = ['password'];
 
-    public function questions(){
+    public function questions()
+    {
         return $this->hasMany(Question::class);
-
     }
 
+    public function savedQuestions()
+    {
+        return $this->belongsToMany(Question::class, 'saved_questions')
+            ->withTimestamps();
+    }
 }

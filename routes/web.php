@@ -5,28 +5,33 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
-
-
+use App\Http\Controllers\ResponseController;
 
 // static pages
-Route::view('/','home.welcome');
-Route::view('/register','home.register')->name('register.form');
-Route::view('/login','home.login')->name('login.form');
+Route::view('/', 'home.welcome');
+Route::view('/register', 'home.register')->name('register.form');
+Route::view('/login', 'home.login')->name('login.form');
 
 // login and register , logout
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
+
+
+
+
+
+
 // dashboard page
 Route::get('/dashboard',  [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
-Route::view('/profile','dashboard.profile')->name('profile');
+Route::view('/profile', 'dashboard.profile')->name('profile');
 
 Route::middleware(['auth'])->group(function () {
-     Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
-     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
-     Route::post('/profile/picture', [ProfileController::class, 'updatePicture'])->name('profile.update-picture');
- });
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/profile/picture', [ProfileController::class, 'updatePicture'])->name('profile.update-picture');
+});
 // questions routes
 Route::get('/questions', [QuestionController::class, 'index'])->name('questions.index');
 // Route::get('/questions/create', [QuestionController::class, 'create'])->name('questions.create');
@@ -35,4 +40,7 @@ Route::get('/questions/{id}', [QuestionController::class, 'show'])->name('questi
 Route::get('/questions/{id}/edit', [QuestionController::class, 'edit'])->name('questions.edit');
 Route::put('/questions/{id}', [QuestionController::class, 'update'])->name('questions.update');
 Route::delete('/questions/{id}', [QuestionController::class, 'destroy'])->name('questions.destroy');
+Route::post('/questions/{question}/save', [QuestionController::class, 'toggleSave'])->name('questions.save');
 
+Route::get('/questions/{id}/responses', [ResponseController::class, 'index'])->name('responses.index');
+Route::post('/questions/{id}/responses', [ResponseController::class, 'store'])->name('responses.store');

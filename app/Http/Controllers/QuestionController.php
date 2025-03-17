@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Question;
+use App\Models\Response;
 use App\Models\Ville;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,17 +15,17 @@ class QuestionController extends Controller
     {
         $keywords = $request->query('keywords');
         $city = $request->query('city');
-    
+
         // Query Builder with optional search filters
         $questions = Question::with('user')
-                    ->when($keywords, function ($query, $keywords) {
-                            return $query->where('title', 'LIKE', "%{$keywords}%")
-                                         ->orWhere('content', 'LIKE', "%{$keywords}%");
-                        })
-                        ->when($city, function ($query, $city) {
-                            return $query->where('ville', 'LIKE', "%{$city}%"); // Ensure column is correct
-                        })->get();
-       
+            ->when($keywords, function ($query, $keywords) {
+                return $query->where('title', 'LIKE', "%{$keywords}%")
+                    ->orWhere('content', 'LIKE', "%{$keywords}%");
+            })
+            ->when($city, function ($query, $city) {
+                return $query->where('ville', 'LIKE', "%{$city}%"); // Ensure column is correct
+            })->get();
+
 
         return view('questions.index', compact('questions'));
     }
@@ -56,7 +57,9 @@ class QuestionController extends Controller
     {
         // 
         $question = Question::with('user')->findOrFail($id);
-        return view("questions.show", compact("question"));
+
+        $responses = Response::where('question_id', $id)->get();
+        return view("questions.show", compact(['question', 'responses']));
     }
 
     public function edit($id)
@@ -98,6 +101,21 @@ class QuestionController extends Controller
 
         $question->delete();
         return redirect()->route('dashboard')->with('success', 'Question deleted successfully');
+    }
+
+    public function toggleSave(Question $question)
+    {
+        $user = Auth::user();
+
+        if ($user->savedQuestions()->where('question_id', $question->id)->exists()) {
+            $user->savedQuestions()->detach($question);
+            $message = 'Question removed from saved';
+        } else {
+            $user->savedQuestions()->attach($question);
+            $message = 'Question saved successfully';
+        }
+
+        return back()->with('success', $message);
     }
 
     // Helper method for authorization

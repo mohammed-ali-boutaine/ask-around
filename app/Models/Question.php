@@ -8,14 +8,20 @@ use App\Models\User;
 class Question extends Model
 {
     //
-    
+
 
 
     protected $table = "questions";
-    protected $fillable = ['title','content','ville','user_id'];
+    protected $fillable = ['title', 'content', 'ville', 'user_id'];
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
+    public function saves()
+    {
+        return $this->belongsToMany(User::class, 'saved_questions')
+            ->withTimestamps();
+    }
 }

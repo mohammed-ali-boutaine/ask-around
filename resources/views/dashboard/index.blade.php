@@ -35,7 +35,12 @@
 
                     <!-- Questions List   Strart-->
                     <div class="space-y-6">
-
+                        @if($count )
+                            <div class="bg-white/15 rounded-lg p-6 text-center flex justify-between items-center">
+                                <p class="mt-2 text-white/70">Here are the most recent questions asked by users.</p>
+                                <p class="text-xl font-semibold text-white">Total Questions: {{ $count }}</p>
+                            </div>
+                        @endif
                         <div class="space-y-6">
                             @if ($questions->isEmpty())
                                 <div class="bg-white/15 rounded-lg p-6 text-center">
